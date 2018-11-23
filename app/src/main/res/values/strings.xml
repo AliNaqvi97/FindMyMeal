@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Find My Meal</string>
+    <string name="roll">Roll</string>
+    <string name="find_meal">Find my meal!</string>
+
+    <string name="category_rolled">You rolled the category…</string>
+    <string name="category_unrolled">Press the button to roll a category</string>
+    <string name="instructions">Instructions</string>
+    <string name="ingredients">Ingredients</string>
 </resources>
