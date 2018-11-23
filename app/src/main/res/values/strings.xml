@@ -7,4 +7,5 @@
     <string name="category_unrolled">Press the button to roll a category</string>
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
+    <string name="dish_picture">Dish picture</string>
 </resources>
