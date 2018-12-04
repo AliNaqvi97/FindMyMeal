@@ -37,6 +37,7 @@ class RecipeActivity : AppCompatActivity() {
         val thumbnailUrl = intent.getStringExtra("thumbnail")
 
         textview_title.text = title
+        this.title = title
         textview_title.isSelected = true
         Picasso.get().load(thumbnailUrl).into(imageview_thumbnail)
 
