@@ -1,7 +1,11 @@
 package com.alihnaqvi.findmymeal
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
@@ -16,27 +20,16 @@ import kotlinx.android.synthetic.main.activity_results.*
 
 class ResultsActivity : AppCompatActivity() {
 
-    private lateinit var resultsRecyclerView: RecyclerView
-    private lateinit var recipesAdapter: RecipesAdapter
-    private lateinit var param: String
-
-    private val apiService by lazy { ApiService.createService() }
-    private var disposable: Disposable? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
+        this.title = intent.getStringExtra("category")
 
-        param = intent.getStringExtra("category")
-        resultsRecyclerView = recyclerview_results
-        resultsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val pagerAdapter = PagerAdapter(supportFragmentManager)
+        viewpager.adapter = pagerAdapter
 
-        recipesAdapter = RecipesAdapter(this)
-        resultsRecyclerView.adapter = recipesAdapter
-
-        this.title = param
-
-        getMeals(param)
+        tabLayout.setupWithViewPager(viewpager)
+        supportActionBar?.elevation = 0f
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -47,29 +40,23 @@ class ResultsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun getMeals(category: String) {
-        val observable =
-            if (category == "Seafood") apiService.fetchMealsByCategory(category)
-            else apiService.fetchMealsByArea(category)
+    class PagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+        private val TITLES = arrayOf("Recipes", "Restaurants")
 
-        disposable =
-                observable
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { result -> showMeals(result.meals) },
-                        { error ->
-                            Toast.makeText(this, "Error: " + error.message, Toast.LENGTH_SHORT).show()
-                        })
-    }
+        override fun getItem(position: Int): Fragment {
+            return when (position) {
+                0 -> RecipesFragment()
+                1 -> RestaurantsFragment()
+                else -> RecipesFragment()
+            }
+        }
 
-    private fun showMeals(meals: ArrayList<Models.Meal>) {
-        progress_circular.visibility = View.GONE
-        recipesAdapter.addAll(meals)
-    }
+        override fun getCount(): Int {
+            return TITLES.size
+        }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable?.dispose()
+        override fun getPageTitle(position: Int): CharSequence? {
+            return TITLES[position]
+        }
     }
 }
