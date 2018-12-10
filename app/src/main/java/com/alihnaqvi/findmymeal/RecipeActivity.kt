@@ -148,8 +148,7 @@ class RecipeActivity : AppCompatActivity() {
             button_youtube.setOnClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(recipe.youtubeUrl)))
             }
-        }
-        else
+        } else
             button_youtube.visibility = View.GONE
 
         if (recipe.source != null) {
@@ -236,10 +235,12 @@ class RecipeActivity : AppCompatActivity() {
                 BaseColumns._ID,
                 MealsDbContract.MealsDbEntry.COLUMN_NAME_ID,
                 MealsDbContract.MealsDbEntry.COLUMN_NAME_TITLE,
-                MealsDbContract.MealsDbEntry.COLUMN_NAME_URL)
+                MealsDbContract.MealsDbEntry.COLUMN_NAME_URL
+            )
         val selection = "${MealsDbContract.MealsDbEntry.COLUMN_NAME_ID} = ?"
         val selectionArgs = arrayOf(param)
-        val cursor = mealsDb.query(MealsDbContract.MealsDbEntry.TABLE_NAME, columns, selection, selectionArgs, null, null, null)
+        val cursor =
+            mealsDb.query(MealsDbContract.MealsDbEntry.TABLE_NAME, columns, selection, selectionArgs, null, null, null)
         val count = cursor.count
         cursor.close()
         return count > 0

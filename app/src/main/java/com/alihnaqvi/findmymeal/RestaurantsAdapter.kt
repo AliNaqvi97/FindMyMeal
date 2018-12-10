@@ -45,10 +45,11 @@ class RestaurantsAdapter(private val context: Context) : RecyclerView.Adapter<Re
             val mapUri = ApiService.createMapUri(
                 restaurant.geometry.location.lat,
                 restaurant.geometry.location.lng,
-                restaurant.placeId)
+                restaurant.placeId
+            )
 
             val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
-                context.startActivity(mapIntent)
+            context.startActivity(mapIntent)
         }
     }
 

@@ -46,10 +46,11 @@ class FavoritesActivity : AppCompatActivity() {
                 BaseColumns._ID,
                 MealsDbContract.MealsDbEntry.COLUMN_NAME_ID,
                 MealsDbContract.MealsDbEntry.COLUMN_NAME_TITLE,
-                MealsDbContract.MealsDbEntry.COLUMN_NAME_URL)
+                MealsDbContract.MealsDbEntry.COLUMN_NAME_URL
+            )
         val cursor = mealsDb.query(MealsDbContract.MealsDbEntry.TABLE_NAME, columns, null, null, null, null, null)
         with(cursor) {
-            while(moveToNext()) {
+            while (moveToNext()) {
                 val mealId = getString(getColumnIndex(MealsDbContract.MealsDbEntry.COLUMN_NAME_ID))
                 val thumbnailUrl = getString(getColumnIndex(MealsDbContract.MealsDbEntry.COLUMN_NAME_URL))
                 val mealName = getString(getColumnIndex(MealsDbContract.MealsDbEntry.COLUMN_NAME_TITLE))
