@@ -40,7 +40,7 @@ class RecipesAdapter(private val activity: Activity) : RecyclerView.Adapter<Reci
             val thumbnail = Pair.create(holder.thumbnailImageView as View, "thumbnail")
             val title = Pair.create(holder.titleTextView as View, "title")
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, thumbnail, title)
-            activity.startActivity(intent, options.toBundle())
+            activity.startActivityForResult(intent, 1, options.toBundle())
         }
     }
 
