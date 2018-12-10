@@ -4,10 +4,17 @@ import com.google.gson.annotations.SerializedName
 
 object Models {
     data class MealsResult(@SerializedName("meals") val meals: ArrayList<Meal>)
-    data class RecipeResult(@SerializedName("meals") val meals: ArrayList<Recipe>)
+
+    data class RecipeResult(@SerializedName("meals") val recipes: ArrayList<Recipe>)
+
+    data class RestaurantsResult(@SerializedName("results") val restaurants: ArrayList<Restaurant>)
+
+    data class GeocodingResult(@SerializedName("results") val addresses: ArrayList<Address>)
+
     data class Meal(@SerializedName ("strMeal") val title: String,
                     @SerializedName ("strMealThumb") val thumbnailUrl: String,
                     @SerializedName ("idMeal") val id: String)
+
     data class Recipe(@SerializedName("strInstructions") val instructions: String,
                       @SerializedName("strYoutube") val youtubeUrl: String?,
                       @SerializedName("strIngredient1") val ingredient1: String?,
@@ -50,6 +57,23 @@ object Models {
                       @SerializedName("strMeasure18") val measure18: String?,
                       @SerializedName("strMeasure19") val measure19: String?,
                       @SerializedName("strMeasure20") val measure20: String?,
-                      @SerializedName("strSource") val source: String?) {
+                      @SerializedName("strSource") val source: String?)
+
+    data class Restaurant(@SerializedName("geometry") val geometry: Geometry,
+                          @SerializedName("name") val name: String,
+                          @SerializedName("opening_hours") val hours: Hours,
+                          @SerializedName("place_id") val placeId: String,
+                          @SerializedName("rating") val rating: Float,
+                          var address: String) {
+
+        data class Geometry(@SerializedName("location") val location: Location) {
+
+            data class Location(@SerializedName("lat") val lat: Double,
+                                @SerializedName("lng") val lng: Double)
+        }
+
+        data class Hours(@SerializedName("open_now") val openNow: Boolean)
     }
+
+    data class Address(@SerializedName("formatted_address") val address: String)
 }
