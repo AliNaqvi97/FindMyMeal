@@ -3,6 +3,8 @@ package com.alihnaqvi.findmymeal
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -23,21 +25,20 @@ class MainActivity : AppCompatActivity() {
         "British",
         "Canadian",
         "Chinese",
-        "Dutch",
         "French",
         "Greek",
         "Indian",
-        "Irish",
         "Italian",
         "Jamaican",
         "Japanese",
         "Malaysian",
         "Mexican",
         "Moroccan",
-        "Russian",
         "Seafood",
         "Spanish",
         "Thai",
+        "Vegan",
+        "Vegetarian",
         "Vietnamese"
     )
 
@@ -65,9 +66,22 @@ class MainActivity : AppCompatActivity() {
         findButton = button_find
 
         infoTextView.text = getString(R.string.category_unrolled)
+        categoryTextView.text = "?????????"
 
         rollButton.setOnClickListener(rollListener)
         findButton.setOnClickListener(findMealListener)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_favorites, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.open_favorites -> startActivity(Intent(this, FavoritesActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun updateUi() {
